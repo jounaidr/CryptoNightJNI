@@ -1,7 +1,5 @@
 package tk.netindev.drill.hasher;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,7 +28,6 @@ import java.io.InputStream;
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-@Slf4j
 public class Hasher {
 
     public static native void slowHash(byte[] input, byte[] output);
@@ -38,18 +35,24 @@ public class Hasher {
     static {
         String library = null;
         final String system = System.getProperty("os.name").toLowerCase();
-        if (system.indexOf("win") >= 0) {
-            library = "/win/x64/cryptonight.dll";
-        } else if (system.indexOf("nix") >= 0 || system.indexOf("nux") >= 0
-                || system.indexOf("aix") >= 0) {
-            library = "/unix/x64/libcryptonight.so";
-        } else {
-            log.error("Couldn't find a dynamic-link library for your system.");
+
+        try {
+            if (system.indexOf("win") >= 0) {
+                library = "/win/x64/cryptonight.dll";
+            } else if (system.indexOf("nix") >= 0 || system.indexOf("nux") >= 0
+                    || system.indexOf("aix") >= 0) {
+                library = "/unix/x64/libcryptonight.so";
+            } else {
+                throw new UnsupportedOperatingSystemException(String.format("Operating system: '%s' is not supported", system));
+            }
+        } catch (UnsupportedOperatingSystemException e) {
+            e.printStackTrace();
         }
+
         try {
             loadLibrary(library);
         } catch (final IOException e) {
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
     }
 
