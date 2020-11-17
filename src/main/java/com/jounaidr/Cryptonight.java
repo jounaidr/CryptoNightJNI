@@ -2,6 +2,8 @@ package com.jounaidr;
 
 import tk.netindev.drill.hasher.Hasher;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author jounaidr
  * Source: https://github.com/jounaidr/CryptonightJNI
@@ -31,7 +33,7 @@ public class Cryptonight {
 
     public Cryptonight(String inputData) {
         this.inputData = inputData;
-        Hasher.slowHash(inputData.getBytes(),out);
+        Hasher.slowHash(inputData.getBytes(StandardCharsets.UTF_8),out);
     }
 
     public byte[] returnHash(){
