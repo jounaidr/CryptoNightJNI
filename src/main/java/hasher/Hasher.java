@@ -34,24 +34,22 @@ public class Hasher {
 
     static {
         String binary = "";
+        //Get the system OS
         final String system = System.getProperty("os.name").toLowerCase();
 
         try {
+            //Load the binary corresponding with the system architecture
             if (system.contains("win")) {
-                binary = "/win/cryptonight.dll";
-            } else if (system.contains("nix") || system.contains("nux")
+                loadBinary("/win/cryptonight.dll");
+            } else if (system.contains("nix")
+                    || system.contains("nux")
                     || system.contains("aix")) {
-                binary = "/unix/libcryptonight.so";
+                loadBinary("/unix/libcryptonight.so");
             } else {
+                //If the operating system isn't supported, throw exception
                 throw new hasher.UnsupportedOperatingSystemException(String.format("Operating system: '%s' is not supported", system));
             }
-        } catch (UnsupportedOperatingSystemException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            loadBinary(binary);
-        } catch (final IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
