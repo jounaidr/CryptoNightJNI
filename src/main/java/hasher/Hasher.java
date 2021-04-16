@@ -1,4 +1,4 @@
-package tk.netindev.drill.hasher;
+package hasher;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,34 +33,34 @@ public class Hasher {
     public static native void slowHash(byte[] input, byte[] output);
 
     static {
-        String library = null;
+        String binary = "";
         final String system = System.getProperty("os.name").toLowerCase();
 
         try {
-            if (system.indexOf("win") >= 0) {
-                library = "/win/x64/cryptonight.dll";
-            } else if (system.indexOf("nix") >= 0 || system.indexOf("nux") >= 0
-                    || system.indexOf("aix") >= 0) {
-                library = "/unix/x64/libcryptonight.so";
+            if (system.contains("win")) {
+                binary = "/win/cryptonight.dll";
+            } else if (system.contains("nix") || system.contains("nux")
+                    || system.contains("aix")) {
+                binary = "/unix/libcryptonight.so";
             } else {
-                throw new UnsupportedOperatingSystemException(String.format("Operating system: '%s' is not supported", system));
+                throw new hasher.UnsupportedOperatingSystemException(String.format("Operating system: '%s' is not supported", system));
             }
         } catch (UnsupportedOperatingSystemException e) {
             e.printStackTrace();
         }
 
         try {
-            loadLibrary(library);
+            loadBinary(binary);
         } catch (final IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void loadLibrary(String name) throws IOException {
-        final InputStream inputStream = Hasher.class.getResourceAsStream(name);
+    public static void loadBinary(String binary) throws IOException {
+        final InputStream inputStream = Hasher.class.getResourceAsStream(binary);
         final byte[] buffer = new byte[1024];
         int read = -1;
-        final File temp = File.createTempFile(name, "");
+        final File temp = File.createTempFile(binary, "");
         final FileOutputStream outputStream = new FileOutputStream(temp);
         while ((read = inputStream.read(buffer)) != -1) {
             outputStream.write(buffer, 0, read);

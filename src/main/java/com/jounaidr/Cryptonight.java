@@ -1,6 +1,6 @@
 package com.jounaidr;
 
-import tk.netindev.drill.hasher.Hasher;
+import hasher.Hasher;
 
 /**
  * @author jounaidr
@@ -27,10 +27,8 @@ import tk.netindev.drill.hasher.Hasher;
  */
 public class Cryptonight {
     private byte[] out = new byte[32];
-    private String inputData;
 
     public Cryptonight(String inputData) {
-        this.inputData = inputData;
         Hasher.slowHash(inputData.getBytes(),out);
     }
 
