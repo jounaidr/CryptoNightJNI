@@ -16,5 +16,5 @@ Based on the C++ implementation of CryptoNightV2 provided in the [Monero sourcec
 Overview of how the solution works:
 
 <p align="center" width="100%">
-    <img width="60%" src="https://github.com/jounaidr/CryptoNightJNI/blob/main/docs/resources/CryptonightJNI_wrapper_diagram.png"> 
+    <img width="40%" src="https://github.com/jounaidr/CryptoNightJNI/blob/main/docs/resources/CryptonightJNI_wrapper_diagram.png"> 
 </p>
