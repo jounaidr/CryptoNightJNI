@@ -12,6 +12,7 @@ Based on the C++ implementation of CryptoNightV2 provided in the [Monero sourcec
 </dependency>
 ```
 
+
 Overview of how the solution works:
 
 <p align="center" width="100%">
